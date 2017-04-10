@@ -1,12 +1,13 @@
-package main
+package cmd
 
 import (
 	"fmt"
 
-	"github.com/dutchsec/identify"
 	"github.com/fatih/color"
 	"github.com/minio/cli"
 	"github.com/op/go-logging"
+
+	identify "github.com/dutchcoders/identify/app"
 )
 
 var Version = "0.1"
@@ -69,7 +70,7 @@ func VersionAction(c *cli.Context) {
 	fmt.Println(color.YellowString(fmt.Sprintf("identify")))
 }
 
-func main() {
+func New() *Cmd {
 	app := cli.NewApp()
 	app.Name = "identify"
 	app.Author = ""
@@ -90,7 +91,7 @@ func main() {
 
 	app.Action = func(c *cli.Context) {
 		fmt.Println("Identify - Identify application versions")
-		fmt.Println("http://github.com/dutchsec/identify")
+		fmt.Println("http://github.com/dutchcoders/identify")
 		fmt.Println("DutchSec [https://dutchsec.com/]")
 		fmt.Println("========================================")
 
@@ -154,10 +155,7 @@ func main() {
 		}
 	}
 
-	app.RunAndExitOnError()
-	/*
-		return &Cmd{
-			App: app,
-		}
-	*/
+	return &Cmd{
+		App: app,
+	}
 }

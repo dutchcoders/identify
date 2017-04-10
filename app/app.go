@@ -1,4 +1,4 @@
-package identify
+package app
 
 import (
 	"crypto/sha1"
@@ -25,7 +25,7 @@ import (
 
 	"bytes"
 
-	"github.com/dutchsec/identify/set"
+	"github.com/dutchcoders/identify/set"
 	version "github.com/hashicorp/go-version"
 
 	yaml "gopkg.in/yaml.v2"

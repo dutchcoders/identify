@@ -1,4 +1,4 @@
-package identify
+package app
 
 import "gopkg.in/src-d/go-git.v4/plumbing"
 

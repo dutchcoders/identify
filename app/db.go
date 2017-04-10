@@ -1,4 +1,4 @@
-package identify
+package app
 
 type Application struct {
 	Files      []string `yaml:"files"`
