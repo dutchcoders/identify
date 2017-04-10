@@ -186,7 +186,9 @@ func (b *identify) Identify(target string) error {
 			continue
 		}
 
-		if resp.StatusCode != 200 {
+		if resp.StatusCode >= http.StatusOK && resp.StatusCode < http.StatusMultipleChoices {
+		} else {
+			fmt.Println(color.RedString("[-] Error downloading %s got status code: %d", abs.String(), resp.StatusCode))
 			continue
 		}
 
