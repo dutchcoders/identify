@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
+	version "github.com/hashicorp/go-version"
 	_ "github.com/minio/cli"
 	_ "github.com/op/go-logging"
 	git "gopkg.in/src-d/go-git.v4"
@@ -25,9 +26,6 @@ import (
 	"gopkg.in/src-d/go-billy.v2/osfs"
 
 	"bytes"
-
-	"github.com/dutchcoders/identify/set"
-	version "github.com/hashicorp/go-version"
 
 	"encoding/hex"
 
@@ -275,44 +273,74 @@ func (b *identify) Identify(target string) error {
 		}
 	}
 
-	// calculate intersection between versions
-	var s set.Interface = set.New(b.versions...)
+	// count all refs
+	counts := map[string]int{}
 
 	for _, hash := range b.hashes {
-		v1 := set.New(Setify(hash.Refs)...)
+		for _, ref := range hash.Refs {
+			version := normalize(ref.Name())
 
-		s = set.Intersection(s, v1)
+			if _, ok := counts[version]; !ok {
+				counts[version] = 0
+			}
+
+			counts[version]++
+		}
 	}
 
-	if s.IsEmpty() {
+	if len(counts) == 0 {
 		fmt.Println(color.RedString("Could not identify web application"))
 		return nil
 	}
 
-	versionsRaw := s.List()
-	versions := make([]*version.Version, len(versionsRaw))
-	for i, raw := range versionsRaw {
-		v, err := version.NewVersion(raw)
-		if err != nil {
-			fmt.Println(color.RedString("Could not identify version: %s: %s", raw, err.Error()))
+	/*
+		versionsRaw := s.List()
+
+		versions := make([]*version.Version, len(versionsRaw))
+		for i, raw := range versionsRaw {
+			v, err := version.NewVersion(raw)
+			if err != nil {
+				fmt.Println(color.RedString("Could not identify version: %s: %s", raw, err.Error()))
+				continue
+			}
+
+			versions[i] = v
 		}
 
-		versions[i] = v
-	}
+		sort.Sort(version.Collection(versions))
 
-	sort.Sort(version.Collection(versions))
-
+	*/
 	fmt.Printf("\n")
 
 	// print identification summary
-	fmt.Printf(color.YellowString("Web application has been identified as one of the following versions: "))
+	fmt.Printf(color.YellowString("Web application has been identified as one of the following versions: \n"))
 
-	for i, version := range versions {
-		if i > 0 {
-			fmt.Printf(", ")
+	n := map[int][]string{}
+
+	var a []int
+	for k, v := range counts {
+		n[v] = append(n[v], k)
+	}
+
+	for k := range n {
+		a = append(a, k)
+	}
+
+	sort.Sort(sort.Reverse(sort.IntSlice(a)))
+
+	for _, k := range a {
+		s2 := []string{}
+
+		for _, s := range n[k] {
+			v, _ := version.NewVersion(s)
+			if v != nil {
+				s2 = append(s2, v.String())
+			} else {
+				s2 = append(s2, s)
+			}
 		}
 
-		fmt.Printf("%s", version.String())
+		fmt.Printf("- %3.0f%% %s\n", ((float64(k) * 100) / float64(len(b.application.Files))), strings.Join(s2, ", "))
 	}
 
 	fmt.Printf("\n")
