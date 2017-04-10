@@ -1,0 +1,25 @@
+joomla:
+  name: joomla
+  description: joomla
+  files: ["media/cms/css/debug.css", "media/media/css/mejs-skins.css", "media/media/css/mediaelementplayer.css", "README.txt"]
+  repository: "https://github.com/joomla/joomla-cms"
+
+typo3:
+  name: typo3
+  description: typo3
+  files: ["typo3/sysext/reports/Resources/Public/Icons/module-reports.svg", "typo3/sysext/backend/Resources/Public/JavaScript/LoginRefresh.js", "typo3/sysext/backend/Resources/Public/JavaScript/LegacyCssClasses.js", "typo3/sysext/backend/Resources/Public/JavaScript/ContextHelp.js"]
+  repository: "https://github.com/TYPO3/TYPO3.CMS"
+
+drupal:
+  name: drupal
+  description: drupal
+  files: ["INSTALL.mysql.txt"]
+  root: "core"
+  repository: "https://github.com/drupal/drupal"
+
+wordpress:
+  name: wordpress
+  description: wordpress
+  files: ["license.txt", "readme.html", "wp-content/themes/twentyeleven/editor-style.css", "wp-content/themes/twentyfifteen/readme.txt", "wp-content/themes/twentyfifteen/js/functions.js", "wp-includes/css/admin-bar.css"]
+  root: ""
+  repository: "https://github.com/WordPress/WordPress"

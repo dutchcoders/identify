@@ -1,0 +1,168 @@
+{
+    "memo": "c431aaf84baa57f3ba2ef986c583ff0f6ff0d0613db304347d9eea90aa1f885f",
+    "projects": [
+        {
+            "name": "github.com/fatih/color",
+            "version": "v1.4.1",
+            "revision": "9131ab34cf20d2f6d83fdc67168a5430d1c7dc23",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/hashicorp/go-version",
+            "branch": "master",
+            "revision": "03c5bf6be031b6dd45afec16b1cf94fc8938bc77",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-colorable",
+            "version": "v0.0.7",
+            "revision": "d228849504861217f796da67fae4f6e347643f15",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-isatty",
+            "version": "v0.0.2",
+            "revision": "fc9e8d8ef48496124e79ae0df75490096eccf6fe",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/minio/cli",
+            "version": "v1.3.0",
+            "revision": "8683fa7fef37cc8cb092f47bdb6b403e0049f9ee",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/op/go-logging",
+            "version": "v1",
+            "revision": "b2cb9fa56473e98db8caba80237377e83fe44db5",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/sergi/go-diff",
+            "branch": "master",
+            "revision": "24e2351369ec4949b2ed0dc5c477afdd4c4034e8",
+            "packages": [
+                "diffmatchpatch"
+            ]
+        },
+        {
+            "name": "github.com/src-d/gcfg",
+            "version": "v1.3.0",
+            "revision": "f187355171c936ac84a82793659ebb4936bc1c23",
+            "packages": [
+                ".",
+                "scanner",
+                "token",
+                "types"
+            ]
+        },
+        {
+            "name": "golang.org/x/crypto",
+            "branch": "master",
+            "revision": "55a552f0823e0d3d54931488a2993ebd2fd0258c",
+            "packages": [
+                "curve25519",
+                "ed25519",
+                "ed25519/internal/edwards25519",
+                "ssh",
+                "ssh/agent"
+            ]
+        },
+        {
+            "name": "golang.org/x/net",
+            "branch": "master",
+            "revision": "d1e1b351919c6738fdeb9893d5c998b161464f0c",
+            "packages": [
+                "proxy"
+            ]
+        },
+        {
+            "name": "golang.org/x/sys",
+            "branch": "master",
+            "revision": "f3918c30c5c2cb527c0b071a27c35120a6c0719a",
+            "packages": [
+                "unix"
+            ]
+        },
+        {
+            "name": "gopkg.in/src-d/go-billy.v2",
+            "version": "v2.0.0",
+            "revision": "0dfa3dd2e89c570b8e1e25f5b28647525c44c3ca",
+            "packages": [
+                ".",
+                "osfs"
+            ]
+        },
+        {
+            "name": "gopkg.in/src-d/go-git.v4",
+            "branch": "v4",
+            "revision": "36c78b9d1b1eea682703fb1cbb0f4f3144354389",
+            "packages": [
+                ".",
+                "config",
+                "internal/revision",
+                "plumbing",
+                "plumbing/cache",
+                "plumbing/filemode",
+                "plumbing/format/config",
+                "plumbing/format/idxfile",
+                "plumbing/format/index",
+                "plumbing/format/objfile",
+                "plumbing/format/packfile",
+                "plumbing/format/pktline",
+                "plumbing/object",
+                "plumbing/protocol/packp",
+                "plumbing/protocol/packp/capability",
+                "plumbing/protocol/packp/sideband",
+                "plumbing/revlist",
+                "plumbing/storer",
+                "plumbing/transport",
+                "plumbing/transport/client",
+                "plumbing/transport/file",
+                "plumbing/transport/git",
+                "plumbing/transport/http",
+                "plumbing/transport/internal/common",
+                "plumbing/transport/server",
+                "plumbing/transport/ssh",
+                "storage",
+                "storage/filesystem",
+                "storage/filesystem/internal/dotgit",
+                "storage/memory",
+                "utils/binary",
+                "utils/diff",
+                "utils/ioutil",
+                "utils/merkletrie",
+                "utils/merkletrie/internal/frame",
+                "utils/merkletrie/noder"
+            ]
+        },
+        {
+            "name": "gopkg.in/warnings.v0",
+            "version": "v0.1.1",
+            "revision": "8a331561fe74dadba6edfc59f3be66c22c3b065d",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "gopkg.in/yaml.v2",
+            "branch": "v2",
+            "revision": "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b",
+            "packages": [
+                "."
+            ]
+        }
+    ]
+}
