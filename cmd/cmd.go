@@ -92,6 +92,7 @@ func New() *Cmd {
 	app.Action = func(c *cli.Context) {
 		fmt.Println("Identify - Identify application versions")
 		fmt.Println("http://github.com/dutchcoders/identify")
+		fmt.Println("")
 		fmt.Println("DutchSec [https://dutchsec.com/]")
 		fmt.Println("========================================")
 
