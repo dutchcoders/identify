@@ -19,6 +19,7 @@ import (
 	_ "github.com/op/go-logging"
 	git "gopkg.in/src-d/go-git.v4"
 	"gopkg.in/src-d/go-git.v4/plumbing"
+	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"gopkg.in/src-d/go-git.v4/storage/filesystem"
 
 	"gopkg.in/src-d/go-billy.v2/osfs"
@@ -133,18 +134,18 @@ func normalize(name plumbing.ReferenceName) string {
 func (b *identify) WorkReference(ref *plumbing.Reference) error {
 	b.versions = append(b.versions, normalize(ref.Name()))
 
-	commit, err := b.r.CommitObject(ref.Hash())
-	if err != nil {
-		// don't know (yet) why commits cannot be found, ignoring this error for now
-		if b.debug {
-			fmt.Println("Could not find commit: ", ref.Name(), ref.Hash().String(), err.Error())
-		}
+	var tree *object.Tree
+	if c, err := b.r.CommitObject(ref.Hash()); err == nil {
+		tree, _ = c.Tree()
+	} else if c, err := b.r.TagObject(ref.Hash()); err == nil {
+		tree, _ = c.Tree()
+	} else if err != nil {
+		fmt.Println(color.RedString("Could not find commit or tag for %s: %s %s", ref.Name(), ref.Hash().String(), err.Error()))
 		return nil
 	}
 
-	tree, err := commit.Tree()
-	if err != nil {
-		return fmt.Errorf("Could not find commit tree: %s", err.Error())
+	if tree == nil {
+		return fmt.Errorf("Could not find tree for commit or tag")
 	}
 
 	for fileName, hash := range b.hashes {
