@@ -29,6 +29,8 @@ import (
 	"github.com/dutchcoders/identify/set"
 	version "github.com/hashicorp/go-version"
 
+	"encoding/hex"
+
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -269,7 +271,7 @@ func (b *identify) Identify(target string) error {
 		versions := Setify(hash.Refs)
 
 		if b.debug {
-			fmt.Printf("-> file: %s: versions: %s\n", fileName, strings.Join(versions, ", "))
+			fmt.Printf("-> file: %s (%s): versions: %s\n", fileName, hex.EncodeToString(hash.Hash), strings.Join(versions, ", "))
 		}
 	}
 
@@ -299,6 +301,8 @@ func (b *identify) Identify(target string) error {
 	}
 
 	sort.Sort(version.Collection(versions))
+
+	fmt.Printf("\n")
 
 	// print identification summary
 	fmt.Printf(color.YellowString("Web application has been identified as one of the following versions: "))
