@@ -126,6 +126,7 @@ func CalcHash(r io.ReadCloser) []byte {
 func normalize(name plumbing.ReferenceName) string {
 	s := name.String()
 	s = strings.Replace(s, "refs/tags/", "", -1)
+	s = strings.Replace(s, "refs/heads/", "", -1)
 	return s
 }
 
