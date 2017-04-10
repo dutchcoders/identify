@@ -8,3 +8,30 @@
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-3.0/)
 
 Identify web applications
+===================================
+
+
+## Installation
+
+```
+go get github.com/dutchcoders/identify
+```
+
+## Usage
+
+```
+$ identify --application joomla http://joomla.org
+
+Identify - Identify application versions
+http://github.com/dutchcoders/identify
+
+DutchSec [https://dutchsec.com/]
+========================================
+[+] Calculating hashes
+[+] Cloning repository
+[+] Pulling latest
+
+Web application has been identified as one of the following versions: 3.6.3-rc1, 3.6.3-rc2, 3.6.3-rc3, 3.6.3, 3.6.4, 3.6.5
+
+$
+```
