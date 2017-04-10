@@ -289,7 +289,7 @@ func (b *identify) Identify(target string) error {
 	for i, raw := range versionsRaw {
 		v, err := version.NewVersion(raw)
 		if err != nil {
-			fmt.Println(color.RedString("%s: %s", raw, err.Error()))
+			fmt.Println(color.RedString("Could not identify version: %s: %s", raw, err.Error()))
 		}
 
 		versions[i] = v
