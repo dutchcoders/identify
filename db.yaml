@@ -23,3 +23,10 @@ wordpress:
   files: ["license.txt", "readme.html", "wp-content/themes/twentyeleven/editor-style.css", "wp-content/themes/twentyfifteen/readme.txt", "wp-content/themes/twentyfifteen/js/functions.js", "wp-includes/css/admin-bar.css"]
   root: ""
   repository: "https://github.com/WordPress/WordPress"
+
+phpbb:
+  name: phpbb
+  description: phpbb
+  files: ['styles/prosilver/style.cfg', 'styles/prosilver/theme/stylesheet.css']
+  root: "phpBB"
+  repository: "https://github.com/phpbb/phpbb"
