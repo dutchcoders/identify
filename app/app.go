@@ -136,7 +136,9 @@ func (b *identify) WorkReference(ref *plumbing.Reference) error {
 	commit, err := b.r.CommitObject(ref.Hash())
 	if err != nil {
 		// don't know (yet) why commits cannot be found, ignoring this error for now
-		fmt.Println("Could not find commit: ", ref.Name(), ref.Hash().String(), err.Error())
+		if b.debug {
+			fmt.Println("Could not find commit: ", ref.Name(), ref.Hash().String(), err.Error())
+		}
 		return nil
 	}
 
