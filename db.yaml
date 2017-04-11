@@ -44,3 +44,12 @@ oscommerce2:
   repository: "https://github.com/osCommerce/oscommerce2"
   url: "https://www.oscommerce.com/"
   test-url: "https://demo.oscommerce.com/"
+
+magento:
+  name: magento
+  description: magento
+  files: ["pub/errors/default/css/styles.css", "pub/errors/design.xml", "package.json.sample"]
+  root: ""
+  repository: "https://github.com/magento/magento2"
+  url: "https://magento.com/"
+  test-url: "http://magento2-demo.nexcess.net/"
