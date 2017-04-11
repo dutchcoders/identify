@@ -14,6 +14,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/cheggaaa/pb"
 	"github.com/fatih/color"
 	version "github.com/hashicorp/go-version"
 	_ "github.com/minio/cli"
@@ -46,6 +47,8 @@ type identify struct {
 	db          *DB
 
 	cachePath string
+
+	proxyURL *url.URL
 
 	r *git.Repository
 }
@@ -171,13 +174,31 @@ func (b *identify) WorkReference(ref *plumbing.Reference) error {
 	return nil
 }
 
-func (b *identify) Identify(target string) error {
-	fmt.Println(color.YellowString("[+] Calculating hashes"))
+func (b *identify) Identify() error {
+	fmt.Printf("| Application: %s\n", b.application.Name)
+	fmt.Printf("| Target URL: %s\n", b.targetURL.String())
+
+	if b.proxyURL != nil {
+		fmt.Printf("| Using proxy: %s\n", b.proxyURL.String())
+	}
+
+	fmt.Println("")
+
+	fmt.Println(color.YellowString("[+] Calculating hashes for remote files"))
+
+	bar := pb.New(len(b.application.Files))
+	bar.SetWidth(40)
+	bar.SetMaxWidth(40)
+	bar.Format("[## ]")
+	bar.ShowCounters = true
+	bar.ShowFinalTime = false
+	bar.ShowPercent = false
+	bar.Start()
 
 	for _, file := range b.application.Files {
 		rel, err := url.Parse(file)
 		if err != nil {
-			fmt.Println(color.RedString("Could not parse url %s: %s", file, err.Error()))
+			fmt.Println(color.RedString("[!] Could not parse url %s: %s", file, err.Error()))
 			continue
 		}
 
@@ -185,20 +206,22 @@ func (b *identify) Identify(target string) error {
 
 		resp, err := b.client.Get(abs.String())
 		if err != nil {
-			fmt.Println(color.RedString("Could not download url %s: %s", rel, err.Error()))
+			fmt.Println(color.RedString("[!] Could not download url %s: %s", rel, err.Error()))
 			continue
 		}
 
+		bar.Increment()
+
 		if resp.StatusCode >= http.StatusOK && resp.StatusCode < http.StatusMultipleChoices {
 		} else {
-			fmt.Println(color.RedString("[-] Error downloading %s got status code: %d", abs.String(), resp.StatusCode))
+			fmt.Println(color.RedString("[!] Error downloading %s got status code: %d", abs.String(), resp.StatusCode))
 			continue
 		}
 
 		hash := CalcHash(resp.Body)
 
 		if b.debug {
-			fmt.Printf("[ ] Downloading %s (%d): %x\n", abs.String(), resp.StatusCode, hash)
+			fmt.Printf("[ ] Downloaded %s (%d): %x\n", abs.String(), resp.StatusCode, hash)
 		}
 
 		b.hashes[file] = &Result{
@@ -207,6 +230,8 @@ func (b *identify) Identify(target string) error {
 		}
 	}
 
+	bar.Finish()
+
 	repoCachePath := path.Join(b.cachePath, hashStr(b.application.Repository))
 
 	storage, err := filesystem.NewStorage(osfs.New(repoCachePath))
@@ -214,12 +239,13 @@ func (b *identify) Identify(target string) error {
 		return err
 	}
 
-	fmt.Println(color.YellowString("[+] Cloning repository"))
+	fmt.Println(color.YellowString("[+] Cloning repository to cache"))
 
 	r, err := git.Open(storage, nil)
 	if err == nil {
 	} else if err.Error() != "repository not exists" {
 		// unknown open error
+		return err
 	} else if r, err = git.Clone(storage, nil, &git.CloneOptions{
 		URL:      b.application.Repository,
 		Progress: os.Stdout,
@@ -227,13 +253,14 @@ func (b *identify) Identify(target string) error {
 		return err
 	}
 
-	fmt.Println(color.YellowString("[+] Pulling latest"))
+	fmt.Println(color.YellowString("[+] Pulling latest changes from remote repository"))
 
 	err = r.Fetch(&git.FetchOptions{
 		Progress: os.Stdout,
 	})
 	if err == nil {
 	} else if err.Error() == "already up-to-date" {
+		fmt.Println(" |  Repository already up-to-date")
 	} else {
 		return err
 	}
@@ -313,7 +340,7 @@ func (b *identify) Identify(target string) error {
 	fmt.Printf("\n")
 
 	// print identification summary
-	fmt.Printf(color.YellowString("Web application has been identified as one of the following versions: \n"))
+	fmt.Printf(color.GreenString("[+] Web application has been identified as one of the following versions: \n"))
 
 	n := map[int][]string{}
 
@@ -340,7 +367,7 @@ func (b *identify) Identify(target string) error {
 			}
 		}
 
-		fmt.Printf("- %3.0f%% %s\n", ((float64(k) * 100) / float64(len(b.application.Files))), strings.Join(s2, ", "))
+		fmt.Println(color.GreenString(" |  %3.0f%% %s", ((float64(k) * 100) / float64(len(b.application.Files))), strings.Join(s2, ", ")))
 	}
 
 	fmt.Printf("\n")

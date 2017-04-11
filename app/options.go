@@ -43,6 +43,8 @@ func NoBranches() (func(b *identify) error, error) {
 func ProxyURL(s string) (func(b *identify) error, error) {
 	dialer := net.Dial
 
+	var proxyURL *url.URL
+
 	if s == "" {
 	} else if u, err := url.Parse(s); err != nil {
 		return nil, err
@@ -57,6 +59,8 @@ func ProxyURL(s string) (func(b *identify) error, error) {
 			Proxy: http.ProxyFromEnvironment,
 			Dial:  dialer,
 		}
+
+		b.proxyURL = proxyURL
 
 		return nil
 	}, nil

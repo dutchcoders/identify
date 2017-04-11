@@ -90,11 +90,11 @@ func New() *Cmd {
 	}
 
 	app.Action = func(c *cli.Context) {
-		fmt.Println("Identify - Identify application versions")
+		fmt.Println("Identify - Identify web application versions")
 		fmt.Println("http://github.com/dutchcoders/identify")
 		fmt.Println("")
 		fmt.Println("DutchSec [https://dutchsec.com/]")
-		fmt.Println("========================================")
+		fmt.Println("--------------------------------------")
 
 		options := []identify.OptionFn{}
 
@@ -150,7 +150,7 @@ func New() *Cmd {
 			return
 		}
 
-		if err := b.Identify(""); err != nil {
+		if err := b.Identify(); err != nil {
 			fmt.Println(color.RedString("[*] Error identifying application: %s", err.Error()))
 			return
 		}

@@ -1,9 +1,13 @@
 package app
 
 type Application struct {
-	Files      []string `yaml:"files"`
-	Repository string   `yaml:"repository"`
-	Root       string   `yaml:"root"`
+	Name        string `yaml:"name"`
+	Description string `yaml:"description"`
+
+	Files []string `yaml:"files"`
+
+	Root       string `yaml:"root"`
+	Repository string `yaml:"repository"`
 }
 
 type DB struct {

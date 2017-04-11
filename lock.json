@@ -1,6 +1,14 @@
 {
-    "memo": "c431aaf84baa57f3ba2ef986c583ff0f6ff0d0613db304347d9eea90aa1f885f",
+    "memo": "600e2f3998993666cf402221a8832d331e725e20d342b18f60325778593dd2b4",
     "projects": [
+        {
+            "name": "github.com/cheggaaa/pb",
+            "version": "v1.0.12",
+            "revision": "9a180eb4617eb2112e01ca3fa25c61a6303afcaf",
+            "packages": [
+                "."
+            ]
+        },
         {
             "name": "github.com/fatih/color",
             "version": "v1.4.1",
@@ -29,6 +37,14 @@
             "name": "github.com/mattn/go-isatty",
             "version": "v0.0.2",
             "revision": "fc9e8d8ef48496124e79ae0df75490096eccf6fe",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-runewidth",
+            "version": "v0.0.2",
+            "revision": "9e777a8366cce605130a531d2cd6363d07ad7317",
             "packages": [
                 "."
             ]
