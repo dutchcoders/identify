@@ -35,3 +35,12 @@ phpbb:
   root: "phpBB"
   repository: "https://github.com/phpbb/phpbb"
   url: "https://www.phpbb.com/"
+
+oscommerce2:
+  name: oscommerce2
+  description: oscommerce2
+  files: ["includes/spiders.txt", "includes/cacert.pem", "install/oscommerce.sql", "public/Sites/Shop/js/general.js", "public/Sites/Shop/Templates/Sail/css/user.css"]
+  root: "catalog"
+  repository: "https://github.com/osCommerce/oscommerce2"
+  url: "https://www.oscommerce.com/"
+  test-url: "https://demo.oscommerce.com/"
