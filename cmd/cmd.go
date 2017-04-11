@@ -99,10 +99,10 @@ func New() *Cmd {
 		options := []identify.OptionFn{}
 
 		if args := c.Args(); len(args) == 0 {
-			fmt.Println(color.RedString("[*] No target url set"))
+			fmt.Println(color.RedString("[!] No target url set"))
 			return
 		} else if fn, err := identify.TargetURL(args[0]); err != nil {
-			fmt.Println(color.RedString("[*] Could not parse target url: %s", err.Error()))
+			fmt.Println(color.RedString("[!] Could not parse target url: %s", err.Error()))
 			return
 		} else {
 			options = append(options, fn)
@@ -110,17 +110,17 @@ func New() *Cmd {
 
 		if proxy := c.GlobalString("proxy"); proxy == "" {
 		} else if fn, err := identify.ProxyURL(proxy); err != nil {
-			fmt.Println(color.RedString("[*] Could find set proxy: %s", err.Error()))
+			fmt.Println(color.RedString("[!] Could find set proxy: %s", err.Error()))
 			return
 		} else {
 			options = append(options, fn)
 		}
 
 		if application := c.GlobalString("application"); application == "" {
-			fmt.Println(color.RedString("[*] No application set"))
+			fmt.Println(color.RedString("[!] No application set"))
 			return
 		} else if fn, err := identify.TargetApplication(application); err != nil {
-			fmt.Println(color.RedString("[*] Could find target application: %s", err.Error()))
+			fmt.Println(color.RedString("[!] Could find target application: %s", err.Error()))
 			return
 		} else {
 			options = append(options, fn)
@@ -146,12 +146,12 @@ func New() *Cmd {
 
 		b, err := identify.New(options...)
 		if err != nil {
-			fmt.Println(color.RedString("[*] Could not parse target url: %s", err.Error()))
+			fmt.Println(color.RedString("[!] Error: %s", err.Error()))
 			return
 		}
 
 		if err := b.Identify(); err != nil {
-			fmt.Println(color.RedString("[*] Error identifying application: %s", err.Error()))
+			fmt.Println(color.RedString("[!] Error identifying application: %s", err.Error()))
 			return
 		}
 	}
