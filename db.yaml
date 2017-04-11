@@ -61,3 +61,11 @@ prestashop:
   repository: "https://github.com/PrestaShop/PrestaShop"
   url: "https://www.prestashop.com/"
   test-url: "http://fo.demo.prestashop.com/"
+
+zencart:
+  name: zencart
+  description: zencart
+  files: ["install.txt", "mcs_learn_more.html"]
+  repository: "https://github.com/zencart/zencart"
+  url: "https://www.zen-cart.com/"
+  test-url: "https://www.thedancinghair.com/"
