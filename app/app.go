@@ -53,28 +53,35 @@ type identify struct {
 	r *git.Repository
 }
 
+func Download(src string, dest string) error {
+	resp, err := http.Get(src)
+	if err != nil {
+		return err
+	}
+
+	defer resp.Body.Close()
+
+	f, err := os.OpenFile(dest, os.O_CREATE|os.O_WRONLY, 0600)
+	if err != nil {
+		return err
+	}
+
+	defer f.Close()
+
+	_, err = io.Copy(f, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func New(options ...OptionFn) (*identify, error) {
-
-	// load database with application sets
-	data, err := ioutil.ReadFile("db.yaml")
-	if err != nil {
-		return nil, err
-	}
-
-	// load configuration database
-	var v DB
-
-	err = yaml.Unmarshal(data, &v.Application)
-	if err != nil {
-		return nil, err
-	}
-
 	transport := &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
 		Dial:  net.Dial,
 	}
 
-	// check updates
 	cachePath := ""
 	if usr, err := user.Current(); err != nil {
 		return nil, err
@@ -83,7 +90,6 @@ func New(options ...OptionFn) (*identify, error) {
 	}
 
 	b := &identify{
-		db: &v,
 		client: &http.Client{
 			Transport: transport,
 		},
@@ -103,6 +109,38 @@ func New(options ...OptionFn) (*identify, error) {
 		return nil, err
 	} else if err = os.Mkdir(b.cachePath, 0700); err != nil {
 		return nil, err
+	}
+
+	dbPath := path.Join(b.cachePath, "db.yaml")
+
+	if _, err := os.Stat(dbPath); err == nil {
+	} else if !os.IsNotExist(err) {
+		return nil, err
+	} else if err := Download("https://raw.githubusercontent.com/dutchcoders/identify/master/db.yaml", dbPath); err != nil {
+		return nil, err
+	} else {
+	}
+
+	// load database with application sets
+	data, err := ioutil.ReadFile(dbPath)
+	if err != nil {
+		return nil, err
+	}
+
+	// load configuration database
+	var db DB
+
+	err = yaml.Unmarshal(data, &db.Application)
+	if err != nil {
+		return nil, err
+	}
+
+	b.db = &db
+
+	if application, ok := b.db.Application[b.targetApplication]; !ok {
+		return nil, fmt.Errorf("Application not found in rule set")
+	} else {
+		b.application = &application
 	}
 
 	return b, nil

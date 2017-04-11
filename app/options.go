@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"net"
 	"net/http"
 	"net/url"
@@ -14,7 +13,8 @@ type config struct {
 	noTags     bool
 	debug      bool
 
-	targetURL *url.URL
+	targetApplication string
+	targetURL         *url.URL
 }
 
 type OptionFn func(b *identify) error
@@ -82,12 +82,7 @@ func UserAgent(s string) (func(b *identify) error, error) {
 
 func TargetApplication(s string) (func(b *identify) error, error) {
 	return func(b *identify) error {
-		if application, ok := b.db.Application[s]; !ok {
-			return fmt.Errorf("Application not found in rule set")
-		} else {
-			b.application = &application
-		}
-
+		b.targetApplication = s
 		return nil
 	}, nil
 }
