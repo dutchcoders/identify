@@ -53,3 +53,11 @@ magento:
   repository: "https://github.com/magento/magento2"
   url: "https://magento.com/"
   test-url: "http://magento2-demo.nexcess.net/"
+
+prestashop:
+  name: prestashop
+  description: prestashop
+  files: ["themes/classic/assets/css/theme.css", "composer.json", "README.md", "js/admin.js"]
+  repository: "https://github.com/PrestaShop/PrestaShop"
+  url: "https://www.prestashop.com/"
+  test-url: "http://fo.demo.prestashop.com/"
