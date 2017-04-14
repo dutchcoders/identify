@@ -23,7 +23,7 @@ drupal:
 wordpress:
   name: wordpress
   description: wordpress
-  files: ["license.txt", "readme.html", "wp-content/themes/twentyeleven/editor-style.css", "wp-content/themes/twentyfifteen/readme.txt", "wp-content/themes/twentyfifteen/js/functions.js", "wp-includes/css/admin-bar.css"]
+  files: ["license.txt", "readme.html", "wp-includes/css/admin-bar.css", "wp-includes/css/buttons.css", "wp-includes/css/media-views.css", "wp-includes/js/swfupload/handlers.js"]
   root: ""
   repository: "https://github.com/WordPress/WordPress"
   url: "https://wordpress.org/"
@@ -69,3 +69,15 @@ zencart:
   repository: "https://github.com/zencart/zencart"
   url: "https://www.zen-cart.com/"
   test-url: "https://www.thedancinghair.com/"
+
+#zencart
+#virtuamart
+
+
+#oscommerce:
+#  name: oscommerce3
+#  description: oscommerce 3
+#  files: ["includes/spiders.txt", "includes/cacert.pem", "install/oscommerce.sql", "public/Sites/Shop/js/general.js", "public/Sites/Shop/Templates/Sail/css/user.css"]
+#  root: "public"
+#  repository: "https://github.com/osCommerce/oscommerce"
+#  url: "https://www.oscommerce.com/"
